@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KS.Umbraco4.Calendar.Core", "KS.Umbraco4.Calendar.Core\KS.Umbraco4.Calendar.Core.csproj", "{59A153BB-20BC-418C-B2A1-6506E466312B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KS.Umbraco4.Calendar.Web", "KS.Umbraco4.Calendar.Web\KS.Umbraco4.Calendar.Web.csproj", "{E666048B-5299-430D-865A-CFCD6210DB89}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{59A153BB-20BC-418C-B2A1-6506E466312B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59A153BB-20BC-418C-B2A1-6506E466312B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59A153BB-20BC-418C-B2A1-6506E466312B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59A153BB-20BC-418C-B2A1-6506E466312B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E666048B-5299-430D-865A-CFCD6210DB89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E666048B-5299-430D-865A-CFCD6210DB89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E666048B-5299-430D-865A-CFCD6210DB89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E666048B-5299-430D-865A-CFCD6210DB89}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
