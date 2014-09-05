@@ -1,50 +1,35 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ucCalendar.ascx.cs" Inherits="KS.Umbraco4.Calendar.Web.ucCalendar" %>
+<%--<link href="/css/backend/bootstrap.min.css" rel="stylesheet" />
+<link href="/css/backend/bootstrap-datetimepicker.min.css" rel="stylesheet" />--%>
+<link href="/css/backend/ks.umbraco4.calendar.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="/css/backend/jquery.datetimepicker.css"/ >
 
-
-
-<link href="/css/backend/bootstrap-datetimepicker.min.css" rel="stylesheet" />
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.min.js"></script>
-<script src="/scripts/backend/bootstrap-datetimepicker.min.js"></script>
+<script src="/scripts/backend/ks.umbraco4.calendar.controller.js?0"></script>
+<script src="/scripts/backend/jquery.datetimepicker.js"></script>	
+<%--<script src="/scripts/backend/bootstrap.min.js"></script>
+<script src="/scripts/backend/bootstrap-datetimepicker.min.js"></script>--%>
 <script type="text/javascript">
-    $(document).ready(function () {
-        $("#StartDateWrapper").datetimepicker();
-        $("#EndDateWrapper").datetimepicker();
-
-        $("#StartDateWrapper").on('changeDate', function () {
-            $scope.data.startDate = $("#dtStartDate").val();
-        });
-        $("#EndDateWrapper").on('changeDate', function () {
-            $scope.data.endDate = $("#dtEndDate").val();
-        });
-
-        $("#StartDateWrapper").on("change", "input", function () {
-            $scope.data.startDate = $("#dtStartDate").val();
-        });
-        $("#EndDateWrapper").on("change", "input", function () {
-            $scope.data.endDate = $("#dtEndDate").val();
-        });
-    });
+  
 </script>
-<script src="/scripts/backend/frontend.controller.js"></script>
-<div ng-app="test" ng-controller="KS.CalendarController">
-    {{data}}
+<div ng-app="KS.Calendar" ng-controller="KS.CalendarController">
     <input type="hidden" ID="hidCalendar" ClientIDMode="Static" runat="server" ng-model="data"/>
     <div class="fullWidth input-append date datepicker" id="StartDateWrapper" data-inputfield="dtStartDate">
         <label for="dtStartDate">{{language.startDate}}</label>
         <input type="datetime" data-format="yyyy-MM-dd hh:mm:ss" id="dtStartDate" ng-model="data.startDate" ng-required="true" name="startdate" />
-        <span class="add-on">
+        <%--<span class="add-on">
             <i class="icon-calendar" data-time-icon="icon-time" data-date-icon="icon-calendar">
             </i>
-        </span>
+        </span>--%>
     </div>
     <br />
     <div class="fullWidth input-append date datepicker" id="EndDateWrapper" data-inputfield="dtEndDate">
         <label for="dtEndDate">{{language.endDate}}</label>
         <input type="datetime" data-format="yyyy-MM-dd hh:mm:ss" id="dtEndDate" ng-model="data.endDate" name="enddate" enddate />
-        <span class="add-on">
+        <%--<span class="add-on">
             <i class="icon-calendar" data-time-icon="icon-time" data-date-icon="icon-calendar">
             </i>
-        </span>
+        </span>--%>
     </div>
     <br />
     <div class="fullWidth">
