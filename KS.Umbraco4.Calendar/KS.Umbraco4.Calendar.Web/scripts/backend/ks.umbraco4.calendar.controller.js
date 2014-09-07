@@ -32,7 +32,6 @@
          });
      });
  	//using this as default data
-
      if ($("#hidCalendar").val() == "") {
          var emptyModel = '{ recurrence: "1", weekInterval: "1", monthYearOption: "1", interval: "1", weekDay: "1", month: "1", monthOption: "1", startDate: "", endDate: "" }';
          $scope.data = eval('(' + emptyModel + ')');
@@ -41,17 +40,13 @@
          $scope.data =eval('(' +  $("#hidCalendar").val() + ')');
      }
 
-     //console.log($scope.data);
-
- 	$http.get("/scripts/backend/language/nb-NO.js")
+ 	$http.get("/scripts/backend/language/en-GB.js")
 		  .then(function (d) {
 		  	return populateVars(d.data);
 		  });
 
-
  	$scope.$watch('data', function () {
  	    $("#hidCalendar").val(angular.toJson($scope.data));
- 	    //console.log(angular.toJson($scope.data));
  	}, true);
 
  	$scope.toggleDay = function (id) {
@@ -306,8 +301,8 @@ function validateEndDate($scope) {
     }
 }
 
-function convertDateTime(dateTime) {
-    dateTime = dateTime.split(" ");
+function convertDateTime(dt) {
+    var dateTime = dt.split(" ");
 
     var date = dateTime[0].split("-");
     var yyyy = date[0];

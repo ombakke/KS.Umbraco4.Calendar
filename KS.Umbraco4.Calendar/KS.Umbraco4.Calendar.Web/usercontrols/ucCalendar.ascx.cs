@@ -35,12 +35,12 @@ namespace KS.Umbraco4.Calendar.Web
             {
                 CalendarEvent ce = JsonConvert.DeserializeObject<CalendarEvent>(hidCalendar.Value);
                 if(1 < ce.recurrence && !ce.endDate.HasValue){
-                    ce.endDate = ce.startDate;
+                    return null;
                 }
                 else if(ce.endDate.HasValue && ce.endDate.Value < ce.startDate){
-                    ce.endDate = ce.startDate;
+                    return null;
                 }
-                return JsonConvert.SerializeObject(ce);
+                return hidCalendar.Value;
             }
             catch (Exception ex) {
                 return null;

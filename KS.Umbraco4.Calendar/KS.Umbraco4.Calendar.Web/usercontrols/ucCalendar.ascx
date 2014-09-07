@@ -40,7 +40,7 @@
 
     <div ng-if="data.recurrence === '5' || data.recurrence =='4'" class="fullWidth monthYearOption">
         <label ng-repeat="m in monthYearOptions">
-            <input type="radio" name="rdMonthYearOption" ng-checked="data.monthYearOption === m.id" ng-click="selectMonthYearOption(m.id)" />{{m.name}}
+            <input type="radio" name="rdMonthYearOption" ng-checked="data.monthYearOption == m.id" ng-click="selectMonthYearOption(m.id)" />{{m.name}}
         </label>
     </div>
 
@@ -53,7 +53,7 @@
         
     <div ng-if="data.recurrence =='4'" class="fullWidth monthOption">
         <label ng-repeat="mo in monthOptions">
-            <input type="radio" name="rdMonthOption" ng-checked="data.monthOption === mo.id" ng-click="selectMonthOption(mo.id)" />{{mo.name}}
+            <input type="radio" name="rdMonthOption" ng-checked="data.monthOption == mo.id" ng-click="selectMonthOption(mo.id)" />{{mo.name}}
         </label>
     </div>
 
