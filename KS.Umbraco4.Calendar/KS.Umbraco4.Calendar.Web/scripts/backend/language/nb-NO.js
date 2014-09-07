@@ -31,10 +31,14 @@
     "fourth": "Fjerde",
     "fifth": "Femte",
     "last": "Siste",
-    "single": "Wneste",
+    "single": "Eneste",
     "startDate": "Startdato",
     "endDate": "Sluttdato",
     "recurrence": "Gjentagelse",
     "every": "Hver",
-    "weekOn": "uke på"
+    "weekOn": "uke på",
+    "everyMonth" : "Hver måned",
+    "chooseMonth": "Velg måned(er)",
+    "endDateGreaterThanStartDate":"Sluttdato må være senere enn startdato",
+    "endDateRequired":"Sluttdato må fylles ut ved gjentagende hendelse"
 }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using KS.Umbraco4.Calendar.Core;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -18,7 +20,7 @@ namespace KS.Umbraco4.Calendar.Web
         {
             get
             {
-                return hidCalendar.Value;
+                return validateForm();
             }
             set
             {
@@ -26,6 +28,24 @@ namespace KS.Umbraco4.Calendar.Web
                     hidCalendar.Value = value.ToString();
                 }
             }
+        }
+
+        private string validateForm(){
+            try
+            {
+                CalendarEvent ce = JsonConvert.DeserializeObject<CalendarEvent>(hidCalendar.Value);
+                if(1 < ce.recurrence && !ce.endDate.HasValue){
+                    ce.endDate = ce.startDate;
+                }
+                else if(ce.endDate.HasValue && ce.endDate.Value < ce.startDate){
+                    ce.endDate = ce.startDate;
+                }
+                return JsonConvert.SerializeObject(ce);
+            }
+            catch (Exception ex) {
+                return null;
+            }
+            
         }
     }
 }

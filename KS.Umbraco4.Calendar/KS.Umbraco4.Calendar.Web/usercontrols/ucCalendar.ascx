@@ -1,35 +1,22 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ucCalendar.ascx.cs" Inherits="KS.Umbraco4.Calendar.Web.ucCalendar" %>
-<%--<link href="/css/backend/bootstrap.min.css" rel="stylesheet" />
-<link href="/css/backend/bootstrap-datetimepicker.min.css" rel="stylesheet" />--%>
+
 <link href="/css/backend/ks.umbraco4.calendar.css" rel="stylesheet" />
 <link rel="stylesheet" type="text/css" href="/css/backend/jquery.datetimepicker.css"/ >
 
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.min.js"></script>
 <script src="/scripts/backend/ks.umbraco4.calendar.controller.js?0"></script>
 <script src="/scripts/backend/jquery.datetimepicker.js"></script>	
-<%--<script src="/scripts/backend/bootstrap.min.js"></script>
-<script src="/scripts/backend/bootstrap-datetimepicker.min.js"></script>--%>
-<script type="text/javascript">
-  
-</script>
+
 <div ng-app="KS.Calendar" ng-controller="KS.CalendarController">
     <input type="hidden" ID="hidCalendar" ClientIDMode="Static" runat="server" ng-model="data"/>
-    <div class="fullWidth input-append date datepicker" id="StartDateWrapper" data-inputfield="dtStartDate">
+    <div class="fullWidth input-append date datepicker" id="StartDateWrapper">
         <label for="dtStartDate">{{language.startDate}}</label>
-        <input type="datetime" data-format="yyyy-MM-dd hh:mm:ss" id="dtStartDate" ng-model="data.startDate" ng-required="true" name="startdate" />
-        <%--<span class="add-on">
-            <i class="icon-calendar" data-time-icon="icon-time" data-date-icon="icon-calendar">
-            </i>
-        </span>--%>
+        <input type="datetime" id="dtStartDate" ng-model="data.startDate" ng-required="true" name="startdate" />
     </div>
     <br />
-    <div class="fullWidth input-append date datepicker" id="EndDateWrapper" data-inputfield="dtEndDate">
+    <div class="fullWidth input-append date datepicker" id="EndDateWrapper" ">
         <label for="dtEndDate">{{language.endDate}}</label>
-        <input type="datetime" data-format="yyyy-MM-dd hh:mm:ss" id="dtEndDate" ng-model="data.endDate" name="enddate" enddate />
-        <%--<span class="add-on">
-            <i class="icon-calendar" data-time-icon="icon-time" data-date-icon="icon-calendar">
-            </i>
-        </span>--%>
+        <input type="datetime" id="dtEndDate" ng-model="data.endDate" name="enddate" enddate ng-required="data.recurrence > 1"/>
     </div>
     <br />
     <div class="fullWidth">
@@ -63,4 +50,16 @@
         <select class="monthYearDD" ng-model="data.month" ng-options="month.id as month.name for month in months" ng-if="data.recurrence === '5'" ng-disabled="data.monthYearOption === '1'"></select>
     </div>
 
+        
+    <div ng-if="data.recurrence =='4'" class="fullWidth monthOption">
+        <label ng-repeat="mo in monthOptions">
+            <input type="radio" name="rdMonthOption" ng-checked="data.monthOption === mo.id" ng-click="selectMonthOption(mo.id)" />{{mo.name}}
+        </label>
+    </div>
+
+    <div ng-if="data.recurrence === '4' && data.monthOption === '2'" class="days">
+        <label ng-repeat="month in months">
+            <input type="checkbox" ng-checked="data.months.indexOf(month.id) >= 0" ng-click="toggleMonth(month.id)" />{{month.name}}
+        </label>
+    </div>
 </div>

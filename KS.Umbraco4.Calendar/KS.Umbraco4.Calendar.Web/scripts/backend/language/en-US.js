@@ -36,5 +36,9 @@
     "endDate": "End date",
     "recurrence": "Recurrence",
     "every": "Every",
-    "weekOn": "week on"
+    "weekOn": "week on",
+    "everyMonth" : "Every month",
+    "chooseMonth": "Choose month(s)",
+    "endDateGreaterThanStartDate":"End date must be greater than start date",
+    "endDateRequired":"End date is required on recurring events"
 }

@@ -1,9 +1,40 @@
 ﻿angular.module('KS.Calendar', [])
  .controller('KS.CalendarController', function ($scope, $http) {
+
+     $(document).ready(function () {
+         $('#dtStartDate').datetimepicker({
+             format: 'Y-m-d H:i:00',
+             lang: 'no',
+             onChangeDateTime: function (dp, $input) {
+                 $scope.data.startDate = $("#dtStartDate").val();
+                 if ($scope.data.startDate != "" && $scope.data.endDate != "") {
+                     if (convertDateTime($scope.data.endDate).getTime() < convertDateTime($scope.data.startDate)) {
+                         $scope.data.endDate = $scope.data.startDate;
+                         $("#dtEndDate").val($scope.data.startDate);
+                     }
+                 }
+                 $("#hidCalendar").val(angular.toJson($scope.data));
+             }
+         });
+         $('#dtEndDate').datetimepicker({
+             format: 'Y-m-d H:i:00',
+             lang: 'no',
+             onChangeDateTime: function () {
+                 $scope.data.endDate = $("#dtEndDate").val();
+                 if ($scope.data.startDate != "" && $scope.data.endDate != "") {
+                     if (convertDateTime($scope.data.endDate).getTime() < convertDateTime($scope.data.startDate)) {
+                         $scope.data.endDate = $scope.data.startDate;
+                         $("#dtEndDate").val($scope.data.startDate);
+                     }
+                 }
+                 $("#hidCalendar").val(angular.toJson($scope.data));
+             }
+         });
+     });
  	//using this as default data
 
      if ($("#hidCalendar").val() == "") {
-         var emptyModel = '{ recurrence: "1", weekInterval: "1", monthYearOption: "1", interval: "1", weekDay: "1", month: "1" }';
+         var emptyModel = '{ recurrence: "1", weekInterval: "1", monthYearOption: "1", interval: "1", weekDay: "1", month: "1", monthOption: "1", startDate: "", endDate: "" }';
          $scope.data = eval('(' + emptyModel + ')');
      }
      else {
@@ -37,38 +68,39 @@
  		}
  	};
 
- 	$(document).ready(function () {
- 	    $('#dtStartDate').datetimepicker({
- 	        format: 'Y-m-d H:i:00',
- 	        lang: 'no',
- 	        onChangeDateTime: function (dp, $input) {
- 	            $scope.data.startDate = $("#dtStartDate").val();
- 	            if ($scope.data.endDate != "" && convertDateTime($scope.data.endDate).getTime() < convertDateTime($scope.data.startDate)) {
- 	                $scope.data.endDate = $scope.data.startDate;
- 	                $("#dtEndDate").val($scope.data.startDate);
- 	            }
- 	            $("#hidCalendar").val(angular.toJson($scope.data));
- 	        }
- 	    });
- 	    $('#dtEndDate').datetimepicker({
- 	        format: 'Y-m-d H:i:00',
- 	        lang: 'no',
- 	        onChangeDateTime: function () {
- 	            $scope.data.endDate = $("#dtEndDate").val();
- 	            if ($scope.data.endDate != "" && convertDateTime($scope.data.endDate).getTime() < convertDateTime($scope.data.startDate).getTime()) {
- 	                $scope.data.endDate = $scope.data.startDate;
- 	                $("#dtEndDate").val($scope.data.endDate);
- 	            }
- 	            $("#hidCalendar").val(angular.toJson($scope.data));
- 	        }
- 	    });
- 	});
+ 	$scope.toggleMonth = function (id) {
+ 	    if (typeof $scope.data.months == 'undefined') {
+ 	        $scope.data.months = [];
+ 	    }
 
-
+ 	    var i = $scope.data.months.indexOf(id);
+ 	    if (i < 0) {
+ 	        $scope.data.months.push(id);
+ 	    }
+ 	    else {
+ 	        $scope.data.months.splice(i, 1);
+ 	    }
+ 	};
+ 	
  	$scope.selectMonthYearOption = function (id) {
  		$scope.data.monthYearOption = id;
  	};
 
+ 	$scope.selectMonthOption = function (id) {
+ 	    $scope.data.monthOption = id;
+ 	};
+
+ 	$scope.$watch('data.recurrence', function () {
+ 	    validateEndDate($scope);
+ 	});
+
+ 	$scope.$watch('data.endDate', function () {
+ 	    validateEndDate($scope);
+ 	});
+
+ 	$scope.$watch('data.startDate', function () {
+ 	    validateEndDate($scope);
+ 	});
 
  	function populateVars(lang) {
  		$scope.language = lang;
@@ -238,29 +270,41 @@
 				name: lang.specify
 			}
  		];
+
+ 		$scope.monthOptions = [
+            {
+                id: '1',
+                name: lang.everyMonth
+            },
+            {
+                id: '2',
+                name: lang.chooseMonth
+            }
+ 		];
  	}
- }).directive('enddate', function () {
- 	//this directive is used for handling the enddate validation
- 	return {
- 		require: 'ngModel',
- 		link: function ($scope, elm, attrs, ctrl) {
- 			//we hook into the $formatters pipeline to get a chance to validate the enddate
- 			ctrl.$formatters.unshift(function (viewValue) {
- 				if ($scope.data.endDate != "" && new Date($scope.data.endDate).getTime() < new Date($scope.data.startDate).getTime()) {
- 					$scope.data.endDate = $scope.data.startDate;
- 					$("#dtEndDate").val($scope.data.endDate);
- 					return $scope.data.startDate;
- 				}
- 				else {
- 					//ctrl.$setValidity('enddateError', true);
- 					return viewValue;
- 				}
- 			});
- 		}
- 	};
  });
 
+function validateEndDate($scope) {
+    if ($scope.data.endDate != "" && $scope.data.startDate != "") {
+        if (convertDateTime($scope.data.endDate).getTime() < convertDateTime($scope.data.startDate).getTime()) {
+            $scope.data.endDate = $scope.data.startDate;
+        }
+    }
+    else if(1 < $scope.data.recurrence && $scope.data.endDate == ""){
+        $scope.data.endDate = $scope.data.startDate;
+    }
+    else if ($scope.data.endDate != "") {
+        if (isNaN(convertDateTime($scope.data.endDate).getTime())) {
+            $scope.data.endDate = $scope.data.startDate;
+        }
+    }
 
+    if (1 < $scope.data.recurrence && $scope.data.endDate == "") {
+        if ($scope.data.startDate != "") {
+            $scope.data.endDate = $scope.data.startDate;
+        }
+    }
+}
 
 function convertDateTime(dateTime) {
     dateTime = dateTime.split(" ");
