@@ -13,17 +13,18 @@
         <label for="dtStartDate">{{language.startDate}}</label>
         <input type="datetime" id="dtStartDate" ng-model="data.startDate" ng-required="true" name="startdate" />
     </div>
-    <br />
     <div class="fullWidth input-append date datepicker" id="EndDateWrapper" ">
         <label for="dtEndDate">{{language.endDate}}</label>
-        <input type="datetime" id="dtEndDate" ng-model="data.endDate" name="enddate" enddate ng-required="data.recurrence > 1"/>
+        <input type="datetime" id="dtEndDate" ng-model="data.endDate" name="enddate"/>
     </div>
-    <br />
     <div class="fullWidth">
         <label>{{language.recurrence}}</label>
         <select class="full" ng-model="data.recurrence" ng-options="option.id as option.name for option in options"></select>
     </div>
-
+    <div class="fullWidth input-append date datepicker" ng-show="data.recurrence > '1'" id="dateRecurUntilWrapper">
+        <label>{{language.recurUntil}}</label>
+        <input type="text" ng-model="data.recurUntil" id="dateRecurUntil" name="recurUntil" />  
+    </div>
     <div class="divider" ng-if="data.recurrence > '1'"></div>
 
     <div ng-if="data.recurrence ==='3'" class="fullWidth top20">
@@ -62,4 +63,20 @@
             <input type="checkbox" ng-checked="data.months.indexOf(month.id) >= 0" ng-click="toggleMonth(month.id)" />{{month.name}}
         </label>
     </div>
+
+    
+    <div class="divider" ng-if="data.recurrence > '1'"></div>
+
+    <div class="fullWidth input-append date" ng-show="data.recurrence > '1'" id="dateExceptWrapper">
+        <label>{{language.except}}</label>
+        <input type="text" id="dateExcept" name="exceptDate" />
+        <button type="button" ng-click="addExceptDate()" class="btn">{{language.add}}</button>
+    </div>
+
+    <div ng-if="data.recurrence > '1' && data.exceptDates.length > '0'" id="exceptedDays">
+        <div ng-repeat="date in data.exceptDates" class="exceptDay">
+            <span class="exDateWrap"><span class="exDate">{{date}}</span><button type="button" class="btn" ng-click="removeExceptDate(date)">{{language.remove}}</button></span>
+        </div>
+    </div>
+
 </div>
