@@ -157,7 +157,7 @@ namespace KS.Umbraco4.Calendar.Core
                         {
                             e.months = new int?[0];
                         }
-                        if ((startDate <= e.startDate || (e.recurrence > 1 && (e.recurUntil.HasValue && startDate <= e.recurUntil.Value)) || (e.recurrence > 1 && !e.recurUntil.HasValue)) && e.startDate <= endDate)
+                        if ((startDate <= e.startDate || (e.recurrence > 1 && (e.recurUntil.HasValue && startDate <= e.recurUntil.Value)) || (e.recurrence > 1 && !e.recurUntil.HasValue) || (e.endDate.HasValue && startDate <= e.endDate.Value)) && e.startDate <= endDate)
                         {
                             int durationMinutes = 0;
                             if (e.endDate.HasValue)
